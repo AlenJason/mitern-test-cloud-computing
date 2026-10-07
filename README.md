@@ -2,7 +2,7 @@
 
 - Họ tên: **Nguyễn Thiên**, MSSV: **23IT257**
 - Database: `DB_23IT257`
-- Tiền tố mã sách: `257`, VAT = (7 + 5)% = **12%**
+- Tiền tố mã sách: `257`, VAT = (7 + 4)% = **11%**
 
 ## Kiến trúc
 
@@ -12,7 +12,7 @@
 | Điều hướng Read/Write | `src/db.js` tạo 2 kết nối Mongoose: `db.read.Book` cho truy vấn đọc, `db.write.Book` cho truy vấn ghi |
 | Stateless session | `express-session` + `connect-mongo`, lưu vào collection `sessions` trên Atlas (không dùng MemoryStore) |
 | Bộ lọc mã sách | `src/bookService.js`: mã không bắt đầu bằng `257` thì bị từ chối (kiểm tra thêm ở schema Mongoose) |
-| VAT | Tính `priceAfterTax = price × 1.12` trước khi ghi xuống Atlas; footer hiển thị Họ tên, MSSV, VAT |
+| VAT | Tính `priceAfterTax = price × 1.11` trước khi ghi xuống Atlas; footer hiển thị Họ tên, MSSV, VAT |
 
 ## 1. Cấu hình MongoDB Atlas
 

@@ -5,8 +5,8 @@ const MSSV = '23IT257';
 // Tiền tố mã sách = 3 số cuối MSSV
 const PRODUCT_PREFIX = MSSV.slice(-3); // "257"
 
-// VAT = (chữ số cuối MSSV + 5)%
-const VAT_PERCENT = Number(MSSV.slice(-1)) + 5; // 12
+// VAT = (chữ số cuối MSSV + 4)%
+const VAT_PERCENT = Number(MSSV.slice(-1)) + 4; // 11
 
 const DB_NAME = `DB_${MSSV}`;
 
