@@ -1,3 +1,24 @@
+{{#if error}}<div class="alert error">{{error}}</div>{{/if}}
+
+<section class="card">
+  <h2>Thêm sách mới</h2>
+  <form method="post" action="/books">
+    <label>Mã sách (bắt đầu bằng {{student.prefix}})
+      <input name="code" required placeholder="{{student.prefix}}001" value="{{form.code}}">
+    </label>
+    <label>Tên sách
+      <input name="title" required value="{{form.title}}">
+    </label>
+    <label>Tác giả
+      <input name="author" value="{{form.author}}">
+    </label>
+    <label>Giá gốc (VND)
+      <input name="price" type="number" min="0" step="any" required value="{{form.price}}">
+    </label>
+    <button type="submit">Thêm (VAT {{student.vat}}%)</button>
+  </form>
+</section>
+
 <section class="card">
   <h2>Danh sách sách</h2>
   {{#if books.length}}
@@ -11,9 +32,9 @@
         <td>{{code}}</td>
         <td>{{title}}</td>
         <td>{{author}}</td>
-        <td class="num">{{price}}</td>
+        <td class="num">{{money price}}</td>
         <td class="num">{{vatPercent}}%</td>
-        <td class="num">{{priceAfterTax}}</td>
+        <td class="num">{{money priceAfterTax}}</td>
       </tr>
       {{/each}}
     </tbody>
