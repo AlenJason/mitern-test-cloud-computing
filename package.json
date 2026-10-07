@@ -1,0 +1,23 @@
+{
+  "name": "quan-ly-sach-23it257",
+  "version": "1.0.0",
+  "description": "Ứng dụng Quản lý Sách - Kiểm tra giữa kì Điện toán đám mây - 23IT257",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "node --watch app.js"
+  },
+  "keywords": [],
+  "author": "Nguyễn Thiên - 23IT257",
+  "license": "UNLICENSED",
+  "type": "commonjs",
+  "dependencies": {
+    "dotenv": "^18.0.6",
+    "express": "^5.2.1",
+    "express-handlebars": "^9.0.2"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "private": true
+}

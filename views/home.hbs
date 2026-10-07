@@ -1,0 +1,24 @@
+<section class="card">
+  <h2>Danh sách sách</h2>
+  {{#if books.length}}
+  <table>
+    <thead>
+      <tr><th>Mã sách</th><th>Tên sách</th><th>Tác giả</th><th class="num">Giá gốc</th><th class="num">VAT</th><th class="num">Giá sau thuế</th></tr>
+    </thead>
+    <tbody>
+      {{#each books}}
+      <tr>
+        <td>{{code}}</td>
+        <td>{{title}}</td>
+        <td>{{author}}</td>
+        <td class="num">{{price}}</td>
+        <td class="num">{{vatPercent}}%</td>
+        <td class="num">{{priceAfterTax}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  {{else}}
+  <p>Chưa có sách nào.</p>
+  {{/if}}
+</section>
