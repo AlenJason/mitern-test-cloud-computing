@@ -5,7 +5,7 @@ const express = require('express');
 const { engine } = require('express-handlebars');
 const config = require('./src/config');
 const { connectAll } = require('./src/db');
-const sessionMiddleware = require('./src/session');
+const { createSessionMiddleware } = require('./src/session');
 const bookRoutes = require('./src/routes/books');
 
 const app = express();
@@ -25,7 +25,6 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('trust proxy', 1);
 
 app.use(express.urlencoded({ extended: false }));
-app.use(sessionMiddleware);
 
 // Biến dùng chung cho Footer
 app.locals.student = {
@@ -35,20 +34,22 @@ app.locals.student = {
   prefix: config.PRODUCT_PREFIX,
 };
 
-app.use('/', bookRoutes);
+async function start() {
+  await connectAll();
 
-app.use((err, req, res, next) => {
-  console.error(err);
-  res.status(500).send('Lỗi máy chủ: ' + err.message);
-});
-
-connectAll()
-  .then(() => {
-    app.listen(PORT, () => {
-      console.log(`Server chạy tại http://localhost:${PORT}`);
-    });
-  })
-  .catch((err) => {
-    console.error('Không thể kết nối MongoDB Atlas:', err.message);
-    process.exit(1);
+  app.use(createSessionMiddleware());
+  app.use('/', bookRoutes);
+  app.use((err, req, res, next) => {
+    console.error(err);
+    res.status(500).send('Lỗi máy chủ: ' + err.message);
   });
+
+  app.listen(PORT, () => {
+    console.log(`Server chạy tại http://localhost:${PORT}`);
+  });
+}
+
+start().catch((err) => {
+  console.error('Không thể kết nối MongoDB Atlas:', err.message);
+  process.exit(1);
+});

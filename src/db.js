@@ -17,8 +17,6 @@ const readConnection = mongoose.createConnection(requireEnv('MONGODB_URI_READ'),
 // Luồng GHI: dùng tài khoản writer_23IT257 (chỉ có quyền insert)
 const writeConnection = mongoose.createConnection(requireEnv('MONGODB_URI_WRITE'), options);
 
-readConnection.on('connected', () => console.log('[DB] Kết nối luồng ĐỌC thành công'));
-writeConnection.on('connected', () => console.log('[DB] Kết nối luồng GHI thành công'));
 readConnection.on('error', (err) => console.error('[DB] Lỗi luồng ĐỌC:', err.message));
 writeConnection.on('error', (err) => console.error('[DB] Lỗi luồng GHI:', err.message));
 
@@ -32,8 +30,22 @@ const db = {
   write: { Book: BookWriter },
 };
 
+async function connectOne(connection, label) {
+  try {
+    await connection.asPromise();
+    console.log(`[DB] Kết nối luồng ${label} thành công`);
+  } catch (err) {
+    throw new Error(`Luồng ${label}: ${err.message}`);
+  }
+}
+
 async function connectAll() {
-  await Promise.all([readConnection.asPromise(), writeConnection.asPromise()]);
+  const results = await Promise.allSettled([
+    connectOne(readConnection, 'ĐỌC'),
+    connectOne(writeConnection, 'GHI'),
+  ]);
+  const errors = results.filter((r) => r.status === 'rejected').map((r) => r.reason.message);
+  if (errors.length) throw new Error(errors.join(' | '));
 }
 
 module.exports = { db, connectAll, readConnection, writeConnection };
