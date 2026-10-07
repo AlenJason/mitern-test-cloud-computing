@@ -1,4 +1,4 @@
-{{#if error}}<div class="alert error">{{error}}</div>{{/if}}
+{{#if flash}}<div class="alert {{flash.type}}">{{flash.message}}</div>{{/if}}
 
 <section class="card">
   <h2>Thêm sách mới</h2>
@@ -17,6 +17,7 @@
     </label>
     <button type="submit">Thêm (VAT {{student.vat}}%)</button>
   </form>
+  <p><small>Số sách bạn đã thêm trong phiên này: <strong>{{addedCount}}</strong> (lưu trong session trên MongoDB Atlas)</small></p>
 </section>
 
 <section class="card">
