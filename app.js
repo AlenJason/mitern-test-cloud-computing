@@ -5,6 +5,7 @@ const express = require('express');
 const { engine } = require('express-handlebars');
 const config = require('./src/config');
 const { connectAll } = require('./src/db');
+const sessionMiddleware = require('./src/session');
 const bookRoutes = require('./src/routes/books');
 
 const app = express();
@@ -20,7 +21,11 @@ app.engine('hbs', engine({
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 
+// Render đặt app phía sau reverse proxy HTTPS
+app.set('trust proxy', 1);
+
 app.use(express.urlencoded({ extended: false }));
+app.use(sessionMiddleware);
 
 // Biến dùng chung cho Footer
 app.locals.student = {
